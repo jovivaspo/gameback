@@ -1,5 +1,7 @@
 const express = require('express')
 const cors = require('cors')
+const notFound = require('./Middleware/notFound')
+const handleError = require('./Middleware/handleError')
 const app = express()
 
 //Settings
@@ -11,8 +13,13 @@ app.use(cors())
 app.use(express.json())
 
 //Routes
-app.route('/api/user', (req,res)=>{
-    res.send('USERS')
-})
+app.get('/',(req,res)=>{res.send('Welcome')})
+app.use('/api/users', require('./routes/users'))
+
+//Errors
+app.use(notFound)
+app.use(handleError)
+
+
 
 module.exports = app
