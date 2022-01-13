@@ -1,65 +1,83 @@
 const Users = require('../models/Users')
 const userController = {}
 
-userController.listUsers =  (req, res) =>{
+userController.listUsers = (req, res) => {
    console.log('GET USERS')
    Users.find({})
-   .then(users=>{
-     
-      if(users.length===0){
-        return  res.status(404).send({message:'there are not users yet'})
-      }
+      .then(users => {
 
-      res.json(users)
-   })
-   .catch(err=>next(err))
+         if (users.length === 0) {
+            return res.status(404).send({ message: 'there are not users yet' })
+         }
+
+         res.status(200).json(users).end()
+      })
+      .catch(err => next(err))
 }
 
-userController.createUsers = (req,res, next) => {
-   const {name, email, password} = req.body
+userController.createUsers = (req, res, next) => {
+   console.log('CREATE USER')
+   const { name, email, password } = req.body
 
-   Users.findOne({email})
-   .then(user=>{
-      if (user) return res.status(400).json({message:'User exist yet'}).end()
-   })
+   Users.findOne({ email })
+      .then(user => {
+         if (user) {
+            console.log('Usuario existe ya')
+            res.status(400)
+            const err = new Error('There is an user with this email yet')
+            err.name = 'UserExistYet'
+            return next(err)
+         }
 
-   const newUser = new Users({
-      name, password, email
-   })
+         const newUser = new Users({
+            name, password, email
+         })
 
-   newUser.encryptPassword(password)
-   .then(hashPassword=> {
-      console.log(hashPassword)
-      newUser.password=hashPassword
-      newUser.save()
-      .then(userSaved=>res.json(userSaved)) //Hay que devolver id y token
-      .catch(error=>next(error))
-   
-   })
+         newUser.encryptPassword(password)
+            .then(hashPassword => {
+               console.log(hashPassword)
+               newUser.password = hashPassword
+               newUser.save()
+                  .then(userSaved => res.status(201).json(userSaved).end()) //Hay que devolver id y token
+                  .catch(error => next(error))
+
+            })
+
+      }).catch(err => next(err))
+
+
 
 }
 
-userController.login =(req, res, next) =>{
-   const {email,password} = req.body
+userController.login = (req, res, next) => {
+   console.log('LOGIN')
+   const { email, password } = req.body
 
-   Users.findOne({email})
-   .then(user=>{
-     if(!user) return res.status(401).json({message:'email does not exit'})
-     user.matchPassword(password)
-     .then(match=>{
-       // console.log(match)
-        if(match){
-          return res.status(200).json({
-              id:user.id,  //Hay que devolver id y token
-           })
-        }else{
-           return res.status(401).json({message:'Password incorrect'})
-        }
-     })
-   })
+   Users.findOne({ email })
+      .then(user => {
+         if (!user) {
+            const error = new Error('Email does not exist')
+            res.status(404)
+            next(error)
 
-
-   .catch(err=> next(err))
+         } else {
+            user.matchPassword(password)
+               .then(match => {
+                  // console.log(match)
+                  if (match) {
+                     return res.status(200).json({
+                        id: user.id,
+                        email: user.email  //Hay que devolver id y token
+                     })
+                  } else {
+                     const error = new Error('Password incorrect')
+                     res.status(401)
+                     next(error)
+                  }
+               })
+               .catch(error=>next(error))
+         }
+      }).catch(err => next(err))
 }
 
 module.exports = userController

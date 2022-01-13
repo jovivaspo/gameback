@@ -26,6 +26,16 @@ POST http://localhost:8000/api/users/create
 Content-Type: application/json
 
 {
+    "name":"Ana Rodriguez",
+    "email":"Ana@gmail.com",
+    "password":"abcabcabc"
+}
+
+###
+POST http://localhost:8000/api/users/create
+Content-Type: application/json
+
+{
     "name":"alicia Rodriguez",
     "email":"ali@gmail.com",
     "password":"123456"
@@ -40,6 +50,44 @@ Content-Type: application/json
     "name":"Marta Ruiz",
     "email":"marta@gmail.com",
     "password":"holacarapan4"
+}
+###
+POST http://localhost:8000/api/users/create
+Content-Type: application/json
+
+{
+    "name":"Pedro Ruiz",
+    "email":"maa@gmail.com",
+    "password":"holacarap"
+}
+###
+POST http://localhost:8000/api/users/create
+Content-Type: application/json
+
+{
+    "name":"Pedro Lopez",
+    "email":"pedro@gmail.com",
+    "password":"holacarap"
+}
+
+###
+POST http://localhost:8000/api/users/create
+Content-Type: application/json
+
+{
+    "name":"Pedro Ramirez",
+    "email":"pedrito@gmail.com",
+    "password":"holacarap"
+}
+
+###
+POST http://localhost:8000/api/users/create
+Content-Type: application/json
+
+{
+    "name":"Cathow",
+    "email":"cathow@gmail.com",
+    "password":"gato"
 }
 
 ###
