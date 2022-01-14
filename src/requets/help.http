@@ -65,8 +65,8 @@ POST http://localhost:8000/api/users/create
 Content-Type: application/json
 
 {
-    "name":"Pedro Lopez",
-    "email":"pedro@gmail.com",
+    "name":"Jaime Moro",
+    "email":"Moro@gmail.com",
     "password":"holacarap"
 }
 
@@ -87,6 +87,16 @@ Content-Type: application/json
 {
     "name":"Cathow",
     "email":"cathow@gmail.com",
+    "password":"gato"
+}
+
+###
+POST http://localhost:8000/api/users/create
+Content-Type: application/json
+
+{
+    "name":"pera",
+    "email":"pera@gmail.com",
     "password":"gato"
 }
 

@@ -1,4 +1,8 @@
 const Users = require('../models/Users')
+const jwt = require('jsonwebtoken')
+const createToken = require('../helpers/jwt')
+
+
 const userController = {}
 
 userController.listUsers = (req, res) => {
@@ -38,7 +42,15 @@ userController.createUsers = (req, res, next) => {
                console.log(hashPassword)
                newUser.password = hashPassword
                newUser.save()
-                  .then(userSaved => res.status(201).json(userSaved).end()) //Hay que devolver id y token
+                  .then(userSaved => {
+                     const { id, email } = userSaved
+                     const token = createToken(id,email)
+                     res.status(201).json({
+                        token,
+                        id,
+                        email
+                     }).end()
+                  }) //Hay que devolver id y token
                   .catch(error => next(error))
 
             })
@@ -65,9 +77,12 @@ userController.login = (req, res, next) => {
                .then(match => {
                   // console.log(match)
                   if (match) {
+                     const { id, email } = user
+                     const token = createToken(id,email)
                      return res.status(200).json({
-                        id: user.id,
-                        email: user.email  //Hay que devolver id y token
+                        token,
+                        id,
+                        email //Hay que devolver id y token
                      })
                   } else {
                      const error = new Error('Password incorrect')
@@ -75,7 +90,7 @@ userController.login = (req, res, next) => {
                      next(error)
                   }
                })
-               .catch(error=>next(error))
+               .catch(error => next(error))
          }
       }).catch(err => next(err))
 }
