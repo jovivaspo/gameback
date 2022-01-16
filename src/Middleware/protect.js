@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken')
 const protect = (req,res,next)=>{
+  
     const authorization = req.get('authorization')
+    console.log(authorization)
+    let token = ''
 
-    const token = ''
-
-    if(authorization && authorization.toLowerCase().startWith('bearer')){
+    if(authorization && authorization.toLowerCase().startsWith('bearer')){
 
         token = authorization.substring(7)
         console.log(token)

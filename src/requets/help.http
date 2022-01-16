@@ -95,8 +95,8 @@ POST http://localhost:8000/api/users/create
 Content-Type: application/json
 
 {
-    "name":"pera",
-    "email":"pera@gmail.com",
+    "name":"pera23",
+    "email":"pera23@gmail.com",
     "password":"gato"
 }
 
@@ -108,3 +108,38 @@ Content-Type: application/json
     "email":"marta@gmail.com",
     "password":"holacarapan4"
 }
+
+###
+GET http://localhost:8000/api/videogame/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTE1YmEwYjBjZjg2ZmFhYzliNGNkMCIsImVtYWlsIjoiam9yZTEwQGdtYWlsLmNvbSIsImlhdCI6MTY0MjI3MjM2Nn0.YQVhNlUcUGLT919ppZK1OvVUUvRR6pTPZCDmdzEkBAA
+###3e62a54c727560927c
+DELETE  http://localhost:8000/api/videogame/delete/61e3e902c69f3dc760985943
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTE1YmEwYjBjZjg2ZmFhYzliNGNkMCIsImVtYWlsIjoiam9yZTEwQGdtYWlsLmNvbSIsImlhdCI6MTY0MjI3MjM2Nn0.YQVhNlUcUGLT919ppZK1OvVUUvRR6pTPZCDmdzEkBAA
+
+###
+POST http://localhost:8000/api/videogame/add
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTE1YmEwYjBjZjg2ZmFhYzliNGNkMCIsImVtYWlsIjoiam9yZTEwQGdtYWlsLmNvbSIsImlhdCI6MTY0MjI3MjM2Nn0.YQVhNlUcUGLT919ppZK1OvVUUvRR6pTPZCDmdzEkBAA
+
+{
+        "name":"Star wars",
+        "userId":"61e15ba0b0cf86faac9b4cd0"
+         
+}
+###
+GET http://localhost:8000/api/videogame/list/61e15ba0b0cf86faac9b4cd0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTE1YmEwYjBjZjg2ZmFhYzliNGNkMCIsImVtYWlsIjoiam9yZTEwQGdtYWlsLmNvbSIsImlhdCI6MTY0MjI3MjM2Nn0.YQVhNlUcUGLT919ppZK1OvVUUvRR6pTPZCDmdzEkBAA
+
+###
+/* "description":"Juego de futbol",
+        "ranting":8,
+        "image":"aaa",
+        "plattaform":"pc",
+        "personalComment":"increible",
+        "personalRating":10,
+        "state":"in progress",
+         "userId": "61e15ba0b0cf86faac9b4cd0"*/
+
+###
+DELETE  http://localhost:8000/api/videogame/delete/61e15ba0b0cf86faac9b4cd0/61e3ecae856332a93589630e
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTE1YmEwYjBjZjg2ZmFhYzliNGNkMCIsImVtYWlsIjoiam9yZTEwQGdtYWlsLmNvbSIsImlhdCI6MTY0MjI3MjM2Nn0.YQVhNlUcUGLT919ppZK1OvVUUvRR6pTPZCDmdzEkBAA

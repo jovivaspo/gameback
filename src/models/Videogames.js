@@ -1,20 +1,25 @@
-const {Schema, model} = require('mongoose')
+const {Schema,model} = require('mongoose')
 
-const VideogameSchema = new Schema({
-    name:{type:String, required: true},
-    description:{type:String},
-    ranting: {type: Number, required:true},
-    image:{
-        data: Buffer,
-        contentType: String
-    },
-    plattaform:{type:String},
-    personalComment:{type:String, default:''},
-    personalRating: {type:Number, default:0},
-    state:{type:'Progress', default:'Not Started'},
-    users:{type:Schema.Type.ObjectId,
-    ref:'Users'}
+
+const VideogamesSchema = new Schema({
+    name:{type:String, required:true},
+    userId:{type:Schema.Types.ObjectId, ref:'Users'}
+},
+{
+    timestamps:true
 })
 
-module.exports = model('Videogames',VideogameSchema)
 
+VideogamesSchema.set('toJSON',{
+    transform:(document, returnObject) =>{
+        returnObject.id = returnObject._id
+        delete returnObject._id
+        delete returnObject.__v
+        delete returnObject.updatedAt
+        delete returnObject.createdAt
+    }
+})
+
+
+
+module.exports = model('Videogames', VideogamesSchema)

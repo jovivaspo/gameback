@@ -5,10 +5,10 @@ const UserSchema = new Schema({
     name:{type:String, required:true},
     email:{type:String, required:true, unique:true},
     password:{type:String, required: true},
-    videogames:{
+    videogames:[{
         type:Schema.Types.ObjectId,
         ref:'Videogames'
-    }
+    }]
 
 },
 {
