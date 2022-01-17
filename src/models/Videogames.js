@@ -3,6 +3,11 @@ const {Schema,model} = require('mongoose')
 
 const VideogamesSchema = new Schema({
     name:{type:String, required:true},
+    url_image:{type:String, default:''},
+    rating:{type:Number, default:1},
+    status:{type:String, default:'Not Status'},
+    comment:{type:String, default:''},
+    position:{type:Number},
     userId:{type:Schema.Types.ObjectId, ref:'Users'}
 },
 {

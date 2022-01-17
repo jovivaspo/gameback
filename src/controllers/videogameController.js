@@ -31,13 +31,19 @@ videogameController.delete = async (req, res, next) => {
 videogameController.add = async (req, res, next) => {
 
     try {
-        const { name, userId } = req.body
+        const { name, userId, url_image, status, rating, comment, position } = req.body
 
         const user = await Users.findById(userId)
 
         const newGame = new Videogames({
             name,
-            userId
+            userId,
+            url_image,
+            rating,
+            status,
+            comment,
+            position
+
         })
         const videogameSaved = await newGame.save()
 
@@ -69,7 +75,21 @@ videogameController.listGamesUser = async (req, res, next) => {
 
         const user = await Users.findById(userId).populate('videogames',{userId:0})
 
-        res.status(200).json(user)
+       // console.log(user)
+
+        let games = {
+            'Not Status':[],
+            'Not Started':[],
+            'In Progress':[],
+            Completed:[],
+            Abandoned:[]
+        }  
+
+        user.videogames.forEach(el=>{
+            games[el.status] = games[el.status].concat(el)
+        })
+
+        res.status(200).json(games)
 
     } catch (error) { next(error) }
 }

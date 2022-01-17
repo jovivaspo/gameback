@@ -105,8 +105,8 @@ POST http://localhost:8000/api/users/login
 Content-Type: application/json
 
 {
-    "email":"marta@gmail.com",
-    "password":"holacarapan4"
+    "email":"jore10@gmail.com",
+    "password":"abcabc"
 }
 
 ###
@@ -122,7 +122,9 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTE1YmEwYjBjZjg2ZmFhYzliNGNkMCIsImVtYWlsIjoiam9yZTEwQGdtYWlsLmNvbSIsImlhdCI6MTY0MjI3MjM2Nn0.YQVhNlUcUGLT919ppZK1OvVUUvRR6pTPZCDmdzEkBAA
 
 {
-        "name":"Star wars",
+        "name":"Fifa 22",
+        "url_image":"https://media.rawg.io/media/games/355/355d2ec5d6b87518228dc30a9bb0e70d.jpg",
+        "status":"Not Started",
         "userId":"61e15ba0b0cf86faac9b4cd0"
          
 }
@@ -141,5 +143,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTE1YmEwY
          "userId": "61e15ba0b0cf86faac9b4cd0"*/
 
 ###
-DELETE  http://localhost:8000/api/videogame/delete/61e15ba0b0cf86faac9b4cd0/61e3ecae856332a93589630e
+DELETE  http://localhost:8000/api/videogame/delete/61e15ba0b0cf86faac9b4cd0/61e5a31d6730d3f53890dfd4
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTE1YmEwYjBjZjg2ZmFhYzliNGNkMCIsImVtYWlsIjoiam9yZTEwQGdtYWlsLmNvbSIsImlhdCI6MTY0MjI3MjM2Nn0.YQVhNlUcUGLT919ppZK1OvVUUvRR6pTPZCDmdzEkBAA
