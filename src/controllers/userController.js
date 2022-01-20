@@ -28,7 +28,7 @@ userController.createUsers = (req, res, next) => {
          if (user) {
             console.log('Usuario existe ya')
             res.status(400)
-            const err = new Error('There is an user with this email yet')
+            const err = new Error('This email exists yet')
             err.name = 'UserExistYet'
             return next(err)
          }
@@ -51,7 +51,7 @@ userController.createUsers = (req, res, next) => {
                         email
                      }).end()
                   }) //Hay que devolver id y token
-                  .catch(error => next(error))
+                  .catch(err => next(err))
 
             })
 
@@ -68,9 +68,9 @@ userController.login = (req, res, next) => {
    Users.findOne({ email })
       .then(user => {
          if (!user) {
-            const error = new Error('Email does not exist')
+            const err = new Error('Email does not exist')
             res.status(404)
-            next(error)
+            next(err)
 
          } else {
             user.matchPassword(password)
@@ -85,14 +85,14 @@ userController.login = (req, res, next) => {
                         email //Hay que devolver id y token
                      })
                   } else {
-                     const error = new Error('Password incorrect')
+                     const err = new Error('Password incorrect')
                      res.status(401)
-                     next(error)
+                     next(err)
                   }
                })
-               .catch(error => next(error))
+               .catch(err => next(err))
          }
-      }).catch(err => next(err))
+      }).catch(err=> next(err))
 }
 
 module.exports = userController

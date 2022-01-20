@@ -1,7 +1,6 @@
 const Videogames = require('../models/Videogames')
 const Users = require('../models/Users')
 const orderGames = require('../helpers/orderGames')
-const { findOne, findById } = require('../models/Videogames')
 const videogameController = {}
 
 videogameController.list = async (req, res, next) => {
@@ -71,76 +70,63 @@ videogameController.updateList = async (req, res, next) => {
     try {
 
         console.log('Actualizando con nueva versión')
-
         const userId = req.params.userId
+    
+        const { source, destination, snapgames } = req.body
 
-        const { source, destination, games } = req.body
+        console.log(source,destination,snapgames)
 
-        console.log(games.gamesUser.games)
 
         const updateSource = async () =>{
-            console.log('origen');
-            
-            games.gamesUser.games[source.droppableId].forEach(async el => {
-                const gameToUpload = await Videogames.findById(el.id)
-                console.log(gameToUpload)
-                gameToUpload.position = el.position,
-                gameToUpload.status = el.status
-    
-                await gameToUpload.save()
-            })
+            try{
+                console.log('origen: ', snapgames.gamesUser.games[source.droppableId]);
+           
+                snapgames.gamesUser.games[source.droppableId].forEach(async (el,index) => {
+                    const gameToUpload = await Videogames.findById(el.id)
+                    
+                    gameToUpload.position = index
+                    gameToUpload.status = source.droppableId
+        
+                    await gameToUpload.save()
+                })
+            }catch(err){console.log(err)}
+           
         }
 
         const updateDestinition = async () =>{
-            console.log('destino');
+            try{
+            console.log('destino: ',snapgames.gamesUser.games[destination.droppableId] );
             if (source.droppableId !== destination.droppableId) {
-                games.gamesUser.games[destination.droppableId].forEach(async el => {
+                snapgames.gamesUser.games[destination.droppableId].forEach(async (el,index) => {
                     const gameToUpload = await Videogames.findById(el.id)
-                    console.log(gameToUpload)
-                    gameToUpload.position = el.position,
-                    gameToUpload.status = el.status
+                    
+                    gameToUpload.position = index
+                    gameToUpload.status = destination.droppableId,
     
                     await gameToUpload.save()
+                   
                 })
     
             }else return false
+
+        }catch(err){
+            console.log(err)
         }
-       
-
-       
-
-
-
-        /*
-
-        const gamesBefore = await orderGames(userId)
-
-
-        const arraySource = games[source.droppableId]
-        const arrayDest = games [destination.droppableId]
-
-        
-        console.log(source.index)
-        console.log(arraySource.length);
-        
-        console.log('Moviendo el elemento PRINCIPAL');
-
-        const videogameToUpdate = await Videogames.findById(arraySource[source.index])
-
-        videogameToUpdate.status = destination.droppableId
-        videogameToUpdate.position = destination.index
-
-        */
-
+        }
+    
         await Promise.all([updateDestinition(),updateSource()])
 
         const gamesUpdated = await orderGames(userId)
+
+        console.log(gamesUpdated)
+
 
         res.status(200).json(gamesUpdated)
 
 
 
     } catch (error) {
+        console.log(error)
         next(error)
     }
 }

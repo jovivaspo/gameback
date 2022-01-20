@@ -8,7 +8,7 @@ const protect = (req,res,next)=>{
     if(authorization && authorization.toLowerCase().startsWith('bearer')){
 
         token = authorization.substring(7)
-        console.log(token)
+        //console.log(token)
 
     }
 
