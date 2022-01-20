@@ -1,5 +1,7 @@
 const Videogames = require('../models/Videogames')
 const Users = require('../models/Users')
+const orderGames = require('../helpers/orderGames')
+const { findOne, findById } = require('../models/Videogames')
 const videogameController = {}
 
 videogameController.list = async (req, res, next) => {
@@ -62,63 +64,123 @@ videogameController.add = async (req, res, next) => {
     } catch (error) {
         next(error)
     }
+}
+
+videogameController.updateList = async (req, res, next) => {
+
+    try {
+
+        console.log('Actualizando con nueva versión')
+
+        const userId = req.params.userId
+
+        const { source, destination, games } = req.body
+
+        console.log(games.gamesUser.games)
+
+        const updateSource = async () =>{
+            console.log('origen');
+            
+            games.gamesUser.games[source.droppableId].forEach(async el => {
+                const gameToUpload = await Videogames.findById(el.id)
+                console.log(gameToUpload)
+                gameToUpload.position = el.position,
+                gameToUpload.status = el.status
+    
+                await gameToUpload.save()
+            })
+        }
+
+        const updateDestinition = async () =>{
+            console.log('destino');
+            if (source.droppableId !== destination.droppableId) {
+                games.gamesUser.games[destination.droppableId].forEach(async el => {
+                    const gameToUpload = await Videogames.findById(el.id)
+                    console.log(gameToUpload)
+                    gameToUpload.position = el.position,
+                    gameToUpload.status = el.status
+    
+                    await gameToUpload.save()
+                })
+    
+            }else return false
+        }
+       
+
+       
 
 
 
+        /*
+
+        const gamesBefore = await orderGames(userId)
+
+
+        const arraySource = games[source.droppableId]
+        const arrayDest = games [destination.droppableId]
+
+        
+        console.log(source.index)
+        console.log(arraySource.length);
+        
+        console.log('Moviendo el elemento PRINCIPAL');
+
+        const videogameToUpdate = await Videogames.findById(arraySource[source.index])
+
+        videogameToUpdate.status = destination.droppableId
+        videogameToUpdate.position = destination.index
+
+        */
+
+        await Promise.all([updateDestinition(),updateSource()])
+
+        const gamesUpdated = await orderGames(userId)
+
+        res.status(200).json(gamesUpdated)
+
+
+
+    } catch (error) {
+        next(error)
+    }
 }
 
 videogameController.listGamesUser = async (req, res, next) => {
     try {
         const userId = req.params.userId
 
-        //console.log(userId)
-
-        const user = await Users.findById(userId).populate('videogames',{userId:0})
-
-       // console.log(user)
-
-        let games = {
-            'Not Status':[],
-            'Not Started':[],
-            'In Progress':[],
-            Completed:[],
-            Abandoned:[]
-        }  
-
-        user.videogames.forEach(el=>{
-            games[el.status] = games[el.status].concat(el)
-        })
+        const games = await orderGames(userId)
 
         res.status(200).json(games)
 
     } catch (error) { next(error) }
 }
 
-videogameController.deleteGameUser = async (req,res, next) => {
-    try{
+videogameController.deleteGameUser = async (req, res, next) => {
+    try {
         const userId = req.params.userId
         const gameId = req.params.gameId
-    
+
         const gameDeleted = await Videogames.findByIdAndDelete(gameId)
-    
+
         const user = await Users.findById(userId)
-    
-        user.videogames = user.videogames.filter(el=>{
-           
-            return el.toString()!== gameId
+
+        user.videogames = user.videogames.filter(el => {
+
+            return el.toString() !== gameId
         })
-    
+
         const userSaved = await user.save()
-    
+
         res.status(200).json({
-            message:'Delete successful ✅',
+            message: 'Delete successful ✅',
             user: userSaved
-    
+
         })
-    }catch(error){
+    } catch (error) {
         next(error)
     }
-   
+
 
 
 }

@@ -21,4 +21,7 @@ router.route('/add')
 router.route('/delete/:userId/:gameId')
 .delete(protect,videogameController.deleteGameUser)
 
+router.route('/updateList/:userId')
+.put(protect,videogameController.updateList)
+
 module.exports = router
