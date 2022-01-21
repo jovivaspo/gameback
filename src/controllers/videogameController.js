@@ -147,17 +147,35 @@ videogameController.deleteGameUser = async (req, res, next) => {
         const userId = req.params.userId
         const gameId = req.params.gameId
 
-        const gameDeleted = await Videogames.findByIdAndDelete(gameId)
+       // const gameDeleted = await Videogames.findByIdAndDelete(gameId)
+
+       const gameDeleted = await Videogames.findById(gameId)
+
+        const status = gameDeleted.status
 
         const user = await Users.findById(userId)
 
-        user.videogames = user.videogames.filter(el => {
+
+       user.videogames = user.videogames.filter(el => {
 
             return el.toString() !== gameId
         })
 
         const userSaved = await user.save()
 
+       const gamesUpdated = await orderGames(userId)
+
+        if(gamesUpdated[status].length > 0){
+          
+            gamesUpdated[status].forEach( async (el,index)=>{
+               
+                if(el.position > index ){
+                   
+                    await Videogames.findByIdAndUpdate(el._id, {position:index})
+                }
+            })}
+               
+            
         res.status(200).json({
             message: 'Delete successful ✅',
             user: userSaved
