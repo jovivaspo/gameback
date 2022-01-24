@@ -1,6 +1,7 @@
 const Users = require('../models/Users')
-const jwt = require('jsonwebtoken')
+const Videogames = require('../models/Videogames')
 const createToken = require('../helpers/jwt')
+
 
 
 const userController = {}
@@ -17,6 +18,27 @@ userController.listUsers = (req, res) => {
          res.status(200).json(users).end()
       })
       .catch(err => next(err))
+}
+
+userController.deleteUser = async (req, res, next) => {
+  try  { const id = req.params.id
+
+   const userDeleted = await Users.findById(id)
+   console.log(userDeleted)
+   if(userDeleted.videogames.length > 0){
+      userDeleted.videogames.forEach(async (el) =>{
+         console.log('Borrando',el.toString())
+         const borrado = await Videogames.findById(el.toString())
+         console.log(borrado)
+      })
+   }
+   res.status(200).json(userDeleted)
+
+}catch(err){
+   next(err)
+}
+
+   
 }
 
 userController.createUsers = (req, res, next) => {

@@ -6,6 +6,9 @@ const router = Router()
 router.route('/')
 .get(userController.listUsers)
 
+router.route('/delete/:id')
+.delete(userController.deleteUser)
+
 router.route('/create')
 .post(userController.createUsers)
 
