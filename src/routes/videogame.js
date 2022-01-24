@@ -24,4 +24,11 @@ router.route('/delete/:userId/:gameId')
 router.route('/updateList/:userId')
 .put(protect,videogameController.updateList)
 
+router.route('/game/:userId/:gameId')
+.get(protect,videogameController.getGame)
+
+router.route('/update/:gameId')
+.put(protect,videogameController.updateGame)
+
+
 module.exports = router

@@ -8,6 +8,7 @@ const VideogamesSchema = new Schema({
     status:{type:String, default:'Not Status'},
     comment:{type:String, default:''},
     position:{type:Number},
+    idApi:{type:String},
     userId:{type:Schema.Types.ObjectId, ref:'Users'}
 },
 {

@@ -143,5 +143,19 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTE1YmEwY
          "userId": "61e15ba0b0cf86faac9b4cd0"*/
 
 ###
-DELETE  http://localhost:8000/api/videogame/delete/61e15ba0b0cf86faac9b4cd0/61e5a31d6730d3f53890dfd4
+DELETE  http://localhost:8000/api/videogame/delete/61e15ba0b0cf86faac9b4cd0/61ea61c18cf769c11b7070b6
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTE1YmEwYjBjZjg2ZmFhYzliNGNkMCIsImVtYWlsIjoiam9yZTEwQGdtYWlsLmNvbSIsImlhdCI6MTY0MjI3MjM2Nn0.YQVhNlUcUGLT919ppZK1OvVUUvRR6pTPZCDmdzEkBAA
+###
+GET http://localhost:8000/api/videogame/game/61e15ba0b0cf86faac9b4cd0/61ee5dd3c63f44c8ad593e56
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTE1YmEwYjBjZjg2ZmFhYzliNGNkMCIsImVtYWlsIjoiam9yZTEwQGdtYWlsLmNvbSIsImlhdCI6MTY0MjI3MjM2Nn0.YQVhNlUcUGLT919ppZK1OvVUUvRR6pTPZCDmdzEkBAA
+
+###
+PUT http://localhost:8000/api/videogame/update/61ee841891eed7b28ea90d2e
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTE1YmEwYjBjZjg2ZmFhYzliNGNkMCIsImVtYWlsIjoiam9yZTEwQGdtYWlsLmNvbSIsImlhdCI6MTY0MjI3MjM2Nn0.YQVhNlUcUGLT919ppZK1OvVUUvRR6pTPZCDmdzEkBAA
+Content-Type: application/json
+
+{
+    "rating":4,
+    "comment":"Con ganas de mejorar en Fut Champions",
+    "status":"In Progress"
+}

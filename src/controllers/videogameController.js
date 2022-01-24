@@ -32,7 +32,7 @@ videogameController.delete = async (req, res, next) => {
 videogameController.add = async (req, res, next) => {
 
     try {
-        const { name, userId, url_image, status, rating, comment, position } = req.body
+        const { name, userId, url_image, status, rating, comment, position, idApi } = req.body
 
         const user = await Users.findById(userId)
 
@@ -43,7 +43,8 @@ videogameController.add = async (req, res, next) => {
             rating,
             status,
             comment,
-            position
+            position,
+            idApi
 
         })
         const videogameSaved = await newGame.save()
@@ -188,6 +189,44 @@ videogameController.deleteGameUser = async (req, res, next) => {
 
 
 }
+
+videogameController.getGame = async (req, res, next) =>{
+   try{
+
+    const userId = req.params.userId
+    const gameId = req.params.gameId
+
+    const user = await Users.findById(userId).populate('videogames')
+
+    console.log(user)
+
+    const game = user.videogames.filter(el=>el._id.toString()===gameId)
+
+    res.status(200).json(game[0])
+   }catch(err){
+       next(err)
+   }
+
+    
+}
+
+videogameController.updateGame = async (req, res, next) => {
+    try{
+
+        const gameId = req.params.gameId
+        const {rating, comment, status, position} = req.body
+        console.log(rating,comment,status)
+
+        const gameUpdate = await Videogames.findByIdAndUpdate(gameId, {rating, status, comment, position })
+
+        res.status(201).json({message:'Game Updated successfully ✅'})
+
+    }catch(err){
+        next(err)
+    }
+}
+
+
 module.exports = videogameController
 
 
