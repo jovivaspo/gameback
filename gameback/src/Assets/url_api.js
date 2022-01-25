@@ -1,6 +1,5 @@
 
 const URL = process.env.REACT_APP_URL_API
-
 const URL_USER = `${URL}/api/users`
 const URL_VIDEOGAME = `${URL}/api/videogame`
 
