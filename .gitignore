@@ -4,3 +4,4 @@ node_modules
 /gameback/build
 /gameback/.env
 /gameback/.gitignore
+/gameback/node_modules
