@@ -2,6 +2,9 @@
 GET http://localhost:8000/api/users/
 
 ###
+DELETE  http://localhost:8000/api/users/delete/61eeed0529e69c19c5bd387f
+
+###
 POST http://localhost:8000/api/users/create
 Content-Type: application/json
 
@@ -9,95 +12,6 @@ Content-Type: application/json
     "name":"Jorge Vivas",
     "email":"jore@gmail.com",
     "password":"abcabc"
-}
-
-###
-POST http://localhost:8000/api/users/create
-Content-Type: application/json
-
-{
-    "name":"Alberto Rodriguez",
-    "email":"alber@gmail.com",
-    "password":"abcabcabc"
-}
-
-###
-POST http://localhost:8000/api/users/create
-Content-Type: application/json
-
-{
-    "name":"Ana Rodriguez",
-    "email":"Ana@gmail.com",
-    "password":"abcabcabc"
-}
-
-###
-POST http://localhost:8000/api/users/create
-Content-Type: application/json
-
-{
-    "name":"alicia Rodriguez",
-    "email":"ali@gmail.com",
-    "password":"123456"
-}
-
-
-###
-POST http://localhost:8000/api/users/create
-Content-Type: application/json
-
-{
-    "name":"Marta Ruiz",
-    "email":"marta@gmail.com",
-    "password":"holacarapan4"
-}
-###
-POST http://localhost:8000/api/users/create
-Content-Type: application/json
-
-{
-    "name":"Pedro Ruiz",
-    "email":"maa@gmail.com",
-    "password":"holacarap"
-}
-###
-POST http://localhost:8000/api/users/create
-Content-Type: application/json
-
-{
-    "name":"Jaime Moro",
-    "email":"Moro@gmail.com",
-    "password":"holacarap"
-}
-
-###
-POST http://localhost:8000/api/users/create
-Content-Type: application/json
-
-{
-    "name":"Pedro Ramirez",
-    "email":"pedrito@gmail.com",
-    "password":"holacarap"
-}
-
-###
-POST http://localhost:8000/api/users/create
-Content-Type: application/json
-
-{
-    "name":"Cathow",
-    "email":"cathow@gmail.com",
-    "password":"gato"
-}
-
-###
-POST http://localhost:8000/api/users/create
-Content-Type: application/json
-
-{
-    "name":"pera23",
-    "email":"pera23@gmail.com",
-    "password":"gato"
 }
 
 ###
@@ -129,7 +43,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTE1YmEwY
          
 }
 ###
-GET http://localhost:8000/api/videogame/list/61e15ba0b0cf86faac9b4cd0
+GET http://localhost:8000/api/videogame/list/61efb54a9e4693215aadc52d
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTE1YmEwYjBjZjg2ZmFhYzliNGNkMCIsImVtYWlsIjoiam9yZTEwQGdtYWlsLmNvbSIsImlhdCI6MTY0MjI3MjM2Nn0.YQVhNlUcUGLT919ppZK1OvVUUvRR6pTPZCDmdzEkBAA
 
 ###
@@ -143,7 +57,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTE1YmEwY
          "userId": "61e15ba0b0cf86faac9b4cd0"*/
 
 ###
-DELETE  http://localhost:8000/api/videogame/delete/61e15ba0b0cf86faac9b4cd0/61ea61c18cf769c11b7070b6
+DELETE  http://localhost:8000/api/videogame/delete/61efb54a9e4693215aadc52d/61efb5de9e4693215aadc546
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTE1YmEwYjBjZjg2ZmFhYzliNGNkMCIsImVtYWlsIjoiam9yZTEwQGdtYWlsLmNvbSIsImlhdCI6MTY0MjI3MjM2Nn0.YQVhNlUcUGLT919ppZK1OvVUUvRR6pTPZCDmdzEkBAA
 ###
 GET http://localhost:8000/api/videogame/game/61e15ba0b0cf86faac9b4cd0/61ee5dd3c63f44c8ad593e56

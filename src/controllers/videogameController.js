@@ -148,9 +148,9 @@ videogameController.deleteGameUser = async (req, res, next) => {
         const userId = req.params.userId
         const gameId = req.params.gameId
 
-       // const gameDeleted = await Videogames.findByIdAndDelete(gameId)
+        const gameDeleted = await Videogames.findByIdAndDelete(gameId)
 
-       const gameDeleted = await Videogames.findById(gameId)
+      // const gameDeleted = await Videogames.findById(gameId)
 
         const status = gameDeleted.status
 
