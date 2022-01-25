@@ -1,0 +1,71 @@
+.home-background{
+    position: relative;
+    height: 65vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    animation: slide 60s ease-in-out;
+   
+    
+
+}
+
+@keyframes slide {
+    from {
+     background-position: center;
+    }
+    to {
+        background-position: top;
+    }
+  }
+
+.home-gradient{
+   /* background: rgba(0,0,0,.4);
+    background-image: linear-gradient(
+    0deg,rgba(0,0,0,.8) 0,transparent 60%,rgba(0,0,0,.8));*/
+    background: rgb(6,6,6);
+    background: linear-gradient(90deg, rgba(6,6,6,1) 0%, rgba(6,6,6,0.8) 61%, rgba(255,255,255,0) 100%);
+    height: 65vh;
+    width: 100%;
+    z-index: 1;
+}
+.home-main{
+    position: absolute;
+    background-color: transparent;
+    color: white;
+    left: 120px;
+    top:100px
+
+}
+
+.home-banner{
+    height: 400px;
+    width: 100%;
+    background: rgb(6,6,6);
+    background: linear-gradient(180deg, rgba(6,6,6,1) 0%, rgba(33,37,41,1) 45%, rgba(33,37,41,1) 100%);
+    color:white
+}
+
+
+.home-banner-title{
+    padding-top: 30px;
+    text-align: center;
+    color:#F14B2C
+}
+
+.home-banner-subtitle{
+   
+    text-align: center;
+    margin: 16px;
+    margin-bottom: 40px;
+  
+
+}
+
+.home-carrousel{
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+   
+}
