@@ -15,7 +15,6 @@ videogameController.list = async (req, res, next) => {
     }
 }
 
-
 videogameController.delete = async (req, res, next) => {
     try {
 
@@ -66,70 +65,39 @@ videogameController.add = async (req, res, next) => {
     }
 }
 
-videogameController.updateList = async (req, res, next) => {
-
-    try {
-
-        console.log('Actualizando con nueva versión')
-        const userId = req.params.userId
-    
-        const { source, destination, snapgames } = req.body
-
-        console.log(source,destination,snapgames)
+videogameController.updateList = (req, res, next) => {
 
 
-        const updateSource = async () =>{
-            try{
-                console.log('origen: ', snapgames.gamesUser.games[source.droppableId]);
-           
-                snapgames.gamesUser.games[source.droppableId].forEach(async (el,index) => {
-                    const gameToUpload = await Videogames.findById(el.id)
-                    
-                    gameToUpload.position = index
-                    gameToUpload.status = source.droppableId
-        
-                    await gameToUpload.save()
-                })
-            }catch(err){console.log(err)}
-           
-        }
+    console.log('Actualizando con nueva versión')
+    const userId = req.params.userId
 
-        const updateDestinition = async () =>{
-            try{
-            console.log('destino: ',snapgames.gamesUser.games[destination.droppableId] );
-            if (source.droppableId !== destination.droppableId) {
-                snapgames.gamesUser.games[destination.droppableId].forEach(async (el,index) => {
-                    const gameToUpload = await Videogames.findById(el.id)
-                    
-                    gameToUpload.position = index
-                    gameToUpload.status = destination.droppableId,
-    
-                    await gameToUpload.save()
-                   
-                })
-    
-            }else return false
+    const { source, destination, snapgames } = req.body
 
-        }catch(err){
-            console.log(err)
-        }
-        }
-    
-        await Promise.all([updateDestinition(),updateSource()])
+    //console.log(source, destination, snapgames)
 
-        const gamesUpdated = await orderGames(userId)
-
-        console.log(gamesUpdated)
-
-
-        res.status(200).json(gamesUpdated)
-
-
-
-    } catch (error) {
-        console.log(error)
-        next(error)
+    const updateSource = () => {
+        return Promise.all(
+            snapgames.gamesUser.games[source.droppableId].map((el, index) => {
+                return Videogames.findByIdAndUpdate(el.id, { position: index, status: source.droppableId })
+            }))
     }
+    const updateDestination = () => {
+        return Promise.all(
+            snapgames.gamesUser.games[destination.droppableId].map((el, index) => {
+                return Videogames.findByIdAndUpdate(el.id, { position: index, status: destination.droppableId })
+            }))
+    }
+
+
+    Promise.all([updateSource(),updateDestination()])
+    .then(items => {
+        console.log('BD Actualizada');
+        res.status(200).json({message:'Update successfully'}
+    
+    )})
+    .catch(err=>next(err))
+
+
 }
 
 videogameController.listGamesUser = async (req, res, next) => {
@@ -137,6 +105,8 @@ videogameController.listGamesUser = async (req, res, next) => {
         const userId = req.params.userId
 
         const games = await orderGames(userId)
+
+        console.log('Comprobando', games)
 
         res.status(200).json(games)
 
@@ -150,33 +120,34 @@ videogameController.deleteGameUser = async (req, res, next) => {
 
         const gameDeleted = await Videogames.findByIdAndDelete(gameId)
 
-      // const gameDeleted = await Videogames.findById(gameId)
+        // const gameDeleted = await Videogames.findById(gameId)
 
         const status = gameDeleted.status
 
         const user = await Users.findById(userId)
 
 
-       user.videogames = user.videogames.filter(el => {
+        user.videogames = user.videogames.filter(el => {
 
             return el.toString() !== gameId
         })
 
         const userSaved = await user.save()
 
-       const gamesUpdated = await orderGames(userId)
+        const gamesUpdated = await orderGames(userId)
 
-        if(gamesUpdated[status].length > 0){
-          
-            gamesUpdated[status].forEach( async (el,index)=>{
-               
-                if(el.position > index ){
-                   
-                    await Videogames.findByIdAndUpdate(el._id, {position:index})
+        if (gamesUpdated[status].length > 0) {
+
+            gamesUpdated[status].forEach(async (el, index) => {
+
+                if (el.position > index) {
+
+                    await Videogames.findByIdAndUpdate(el._id, { position: index })
                 }
-            })}
-               
-            
+            })
+        }
+
+
         res.status(200).json({
             message: 'Delete successful ✅',
             user: userSaved
@@ -190,38 +161,38 @@ videogameController.deleteGameUser = async (req, res, next) => {
 
 }
 
-videogameController.getGame = async (req, res, next) =>{
-   try{
+videogameController.getGame = async (req, res, next) => {
+    try {
 
-    const userId = req.params.userId
-    const gameId = req.params.gameId
+        const userId = req.params.userId
+        const gameId = req.params.gameId
 
-    const user = await Users.findById(userId).populate('videogames')
+        const user = await Users.findById(userId).populate('videogames')
 
-    console.log(user)
+        console.log(user)
 
-    const game = user.videogames.filter(el=>el._id.toString()===gameId)
+        const game = user.videogames.filter(el => el._id.toString() === gameId)
 
-    res.status(200).json(game[0])
-   }catch(err){
-       next(err)
-   }
+        res.status(200).json(game[0])
+    } catch (err) {
+        next(err)
+    }
 
-    
+
 }
 
 videogameController.updateGame = async (req, res, next) => {
-    try{
+    try {
 
         const gameId = req.params.gameId
-        const {rating, comment, status, position} = req.body
-        console.log(rating,comment,status)
+        const { rating, comment, status, position } = req.body
+        console.log(rating, comment, status)
 
-        const gameUpdate = await Videogames.findByIdAndUpdate(gameId, {rating, status, comment, position })
+        const gameUpdate = await Videogames.findByIdAndUpdate(gameId, { rating, status, comment, position })
 
-        res.status(201).json({message:'Game Updated successfully ✅'})
+        res.status(201).json({ message: 'Game Updated successfully ✅' })
 
-    }catch(err){
+    } catch (err) {
         next(err)
     }
 }

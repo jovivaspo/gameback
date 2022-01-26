@@ -4,15 +4,14 @@ import ModalGame from '../components/ModalGame'
 import Card from '../components/Card'
 import { useListGames } from '../useHooks/useListGames'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import {useSelector} from 'react-redux'
-
+import { useSelector } from 'react-redux'
 
 
 const BacklogD = () => {
-    const [aside,setAside] = useState(null)
+    const [aside, setAside] = useState(null)
     const { onDragEnd } = useListGames()
     const games = useSelector(state => state.games)
-  // console.log(games)
+
     return (
         <div className='backlog-container pt-3'>
             <div className="backlog-container-main container-lg text-white m-auto">
@@ -32,7 +31,7 @@ const BacklogD = () => {
                                             <ModalGame category={status} />
                                             <Droppable droppableId={status}>
                                                 {(provided) => {
-                                                   return( <div className='container-cards'
+                                                    return (<div className='container-cards'
                                                         {...provided.droppableProps}
                                                         ref={provided.innerRef}
                                                     >
@@ -45,7 +44,7 @@ const BacklogD = () => {
                                                                             <div ref={provided.innerRef}
                                                                                 {...provided.draggableProps}
                                                                                 {...provided.dragHandleProps}>
-                                                                                <Card game={el} position={index}/>
+                                                                                <Card game={el} position={index} />
                                                                             </div>
 
                                                                         )
@@ -55,7 +54,8 @@ const BacklogD = () => {
                                                         })}
                                                         {provided.placeholder}
                                                     </div>
-                                                    )}}
+                                                    )
+                                                }}
                                             </Droppable>
 
                                         </div>)

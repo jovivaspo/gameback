@@ -2,6 +2,8 @@
 import { LOGOUT, SIGN, LOGIN } from "../types";
 import { helpHttp } from "../services/helpHttp";
 import { URL_USER_CREATE, URL_USER_LOGIN } from "../Assets/url_api";
+import { list } from "./gamesActions";
+
 
 
 
@@ -29,10 +31,11 @@ export const sign = (name, email, password, setAlert, setShow, setForm, initialF
                 setShow(false)
                 dispatch({ type: SIGN, payload: { id, email, token } })
                 localStorage.setItem('userInfo', JSON.stringify({ id, email, token }))
+                dispatch(list(id,token))
                
             },1200)
             setForm(initialForm)
-          //  dispatch(list(id,token))
+          
         }
 
 
@@ -67,10 +70,12 @@ export const login = ( email, password, setAlert, setShow, setForm, initialForm)
                 setShow(false)
                 dispatch({type:LOGIN, payload:{id,email, token}})
                 localStorage.setItem('userInfo',JSON.stringify({id,email,token}))
+                dispatch(list(id,token))
+               
             },1200)
             
             setForm(initialForm)
-           // dispatch(list(id,token))
+          
         }
     
     } catch (err) {

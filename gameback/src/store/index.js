@@ -4,9 +4,10 @@ import thunk from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 
 const userLocalStorage = localStorage.getItem('userInfo')? JSON.parse(localStorage.getItem('userInfo')) : null
+const gamesLocalStorage = localStorage.getItem('games')? JSON.parse(localStorage.getItem('games')) : null
 const initialState = {
     user:{userInfo: userLocalStorage},
-    games:{gamesUser:null}
+    games:{gamesUser:gamesLocalStorage}
 }
 
 const middleware = [thunk]

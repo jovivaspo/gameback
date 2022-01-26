@@ -6,6 +6,7 @@ import ModalSign from './ModalSign'
 import { useSelector, useDispatch } from 'react-redux'
 import {logout} from '../actions/userActions'
 import alertContext from '../contexts/alertContext'
+import { logoutGames } from '../actions/gamesActions'
 
 
 const NavBar = () => {
@@ -15,7 +16,9 @@ const NavBar = () => {
   const dispatch = useDispatch()
   const handleLogOut = () =>{
     dispatch(logout())
+    dispatch(logoutGames())
     localStorage.removeItem('userInfo')
+    localStorage.removeItem('games')
     setAlert(initialAlert)
   }
 

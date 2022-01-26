@@ -53,6 +53,7 @@ function useForms({ modalBody }) {
       //////////lOGIN//////////////////
       const {email,password} = form
       dispatch(login(email,password,setAlert, setShow, setForm, initialForm))
+     
     }
 
 

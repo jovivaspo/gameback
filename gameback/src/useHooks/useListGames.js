@@ -1,7 +1,7 @@
-import {useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { list, changeColumnFrontend, changeOrderFrontend, updateBackend } from '../actions/gamesActions'
-import { URL_VIDEOGAME_ADD, URL_VIDEOGAME_DELETE, URL_VIDEOGAME_UPDATE } from '../Assets/url_api'
+import { list, changeColumnFrontend, changeOrderFrontend } from '../actions/gamesActions'
+import { URL_VIDEOGAME_ADD, URL_VIDEOGAME_DELETE, URL_VIDEOGAME_UPDATE, URL_VIDEOGAME_UPDATELIST } from '../Assets/url_api'
 import alertContext from '../contexts/alertContext'
 import { helpHttp } from '../services/helpHttp'
 
@@ -11,10 +11,6 @@ const useListGames = () => {
     const { id, token } = useSelector(state => state.user.userInfo)
     const dispatch = useDispatch()
     const {setAlert, setShow} = useContext(alertContext)
-
-     useEffect(()=>{
-        dispatch(list(id,token))
-    },[dispatch])
 
     const addGame = (form) => {
         
@@ -56,12 +52,12 @@ const useListGames = () => {
         })
     }
 
-    const editGame = (form,id) => {
+    const editGame = (form,idGame) => {
  
-            const originalPosition = games.gamesUser.games[form.status].find(el=>el.id===id)
+            const originalPosition = games.gamesUser.games[form.status].find(el=>el.id===idGame)
 
          
-             helpHttp().put( URL_VIDEOGAME_UPDATE + id,{
+             helpHttp().put( URL_VIDEOGAME_UPDATE + idGame,{
                 headers:{
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
@@ -76,6 +72,7 @@ const useListGames = () => {
                         alert(res.error)
                       }else{
                         alert(res.message)
+                        dispatch(list(id,token))
                       
                       }
                 })    
@@ -114,14 +111,35 @@ const useListGames = () => {
         if (source.droppableId !== destination.droppableId) {
          //   console.log('!Cambiando videojuego de columna!')
             dispatch(changeColumnFrontend(games,source,destination))
-            dispatch(updateBackend(games,id,token,source,destination))
+          //  console.log('Esto es lo que se envía al backend',games)
+            updateBackend(games,id,token,source,destination)
           
         } else {
         //    console.log('!Cambiando videojuego solo de orden!')
             dispatch(changeOrderFrontend(games,source,destination))
-            dispatch(updateBackend(games,id,token,source,destination))
+            updateBackend(games,id,token,source,destination)
         }
     };
+
+ const updateBackend = (snapgames, id, token, source,destination) => {
+        
+         helpHttp().put(URL_VIDEOGAME_UPDATELIST + id, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: { source, destination, snapgames }
+            })
+            .then(res => {
+                if (res.error) {
+                    alert(res.error)
+                } else {
+                    //alert(res.message)
+                    dispatch(list(id,token))
+
+                }
+            }) 
+    }
 
 
     return { addGame, deleteGame, onDragEnd, editGame }

@@ -21,7 +21,7 @@ app.use('/api/videogame', require('./routes/videogame'))
 
 //Deploy
 
-__dirname = path.resolve()
+/*__dirname = path.resolve()
 if(process.env.NODE_ENV === 'production'){
     app.use(express.static(path.join(__dirname,'/gameback/build')))
     app.get('*',(req,res)=>{
@@ -29,7 +29,7 @@ if(process.env.NODE_ENV === 'production'){
     })
 }else{
     app.get('/',(req,res)=>{res.send('Welcome')})
-}
+}*/
 
 //Errors
 app.use(notFound)
